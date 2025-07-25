@@ -1,0 +1,15 @@
+version: "3.8"
+services:
+  mysql-database:
+    image: mysql:8.4.6
+    container_name: mysql-database
+    environment:
+      - MYSQL_DATABASE=simple-user-api-db
+      - MYSQL_ROOT_PASSWORD=password
+    networks:
+      - app-network
+    ports:
+      - "3306:3306"
+
+networks:
+  app-network:
