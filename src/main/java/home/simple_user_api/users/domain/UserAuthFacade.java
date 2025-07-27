@@ -41,9 +41,10 @@ public class UserAuthFacade {
     public JwtResponse authenticate(AuthenticationRequest authenticationRequest) {
         UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.login());
 
-        if (!passwordEncoder.matches(authenticationRequest.password(), userDetails.getPassword())) throw new InvalidLoginOrPasswordException();
+        if (!passwordEncoder.matches(authenticationRequest.password(), userDetails.getPassword()))
+            throw new InvalidLoginOrPasswordException();
 
-       String token = jwtService.generateJwtToken(userDetails).getTokenValue();
+        String token = jwtService.generateJwtToken(userDetails).getTokenValue();
         return new JwtResponse(token);
     }
 }

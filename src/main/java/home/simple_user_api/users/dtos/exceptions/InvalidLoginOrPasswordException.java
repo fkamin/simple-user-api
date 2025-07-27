@@ -6,6 +6,6 @@ import org.springframework.http.HttpStatus;
 
 public class InvalidLoginOrPasswordException extends ApiException {
     public InvalidLoginOrPasswordException() {
-        super(ServiceErrorResponseCode.AUTH01, HttpStatus.BAD_REQUEST);
+        super(ServiceErrorResponseCode.AUTH01, HttpStatus.UNAUTHORIZED);
     }
 }

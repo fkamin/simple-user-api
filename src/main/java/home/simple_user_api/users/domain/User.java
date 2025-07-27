@@ -16,8 +16,8 @@ import java.util.UUID;
 @Table(name = "users")
 public class User {
     @Id
-    @Column(name = "id", nullable = false)
     @GeneratedValue
+    @Column(name = "id", nullable = false)
     @JdbcTypeCode(Types.CHAR)
     private UUID id;
 
