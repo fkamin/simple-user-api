@@ -34,6 +34,7 @@ public class UserAuthFacade {
                 registrationRequest.login(),
                 passwordEncoder.encode(registrationRequest.password())
         );
+
         userRepository.save(userToSave);
     }
 
@@ -42,7 +43,7 @@ public class UserAuthFacade {
 
         if (!passwordEncoder.matches(authenticationRequest.password(), userDetails.getPassword())) throw new InvalidLoginOrPasswordException();
 
-        String token = jwtService.generateJwtToken(userDetails).getTokenValue();
+       String token = jwtService.generateJwtToken(userDetails).getTokenValue();
         return new JwtResponse(token);
     }
 }

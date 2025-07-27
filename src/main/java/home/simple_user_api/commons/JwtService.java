@@ -2,10 +2,7 @@ package home.simple_user_api.commons;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.oauth2.jwt.Jwt;
-import org.springframework.security.oauth2.jwt.JwtClaimsSet;
-import org.springframework.security.oauth2.jwt.JwtEncoder;
-import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
+import org.springframework.security.oauth2.jwt.*;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -25,13 +22,15 @@ public class JwtService {
         Instant now = Instant.now();
         Instant expiryDate = now.plusSeconds(expirationTime);
 
-        JwtClaimsSet jwtClaimsSet = JwtClaimsSet.builder()
-                .subject(userDetails.getUsername())
+        var jwtHeader = JwsHeader.with(() -> "HS256").build();
+
+        JwtClaimsSet claims = JwtClaimsSet.builder()
                 .issuedAt(now)
                 .expiresAt(expiryDate)
-
+                .subject(userDetails.getUsername())
+                .claim("user", userDetails.getUsername())
                 .build();
 
-        return jwtEncoder.encode(JwtEncoderParameters.from(jwtClaimsSet));
+        return jwtEncoder.encode(JwtEncoderParameters.from(jwtHeader, claims));
     }
 }

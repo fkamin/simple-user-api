@@ -3,7 +3,8 @@ package home.simple_user_api.items;
 import home.simple_user_api.items.domain.ItemFacade;
 import home.simple_user_api.items.dtos.requests.CreateItemRequest;
 import home.simple_user_api.items.dtos.responses.ItemResponse;
-import org.springframework.http.HttpStatus;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/items")
+@SecurityRequirement(name = "Bearer Authentication")
 public class ItemController {
     private final ItemFacade itemFacade;
 
@@ -20,10 +22,10 @@ public class ItemController {
     }
 
     @PostMapping
-    public ResponseEntity<ItemResponse> createItem(@RequestBody CreateItemRequest createItemRequest, Authentication authentication) {
+    public ResponseEntity<String> createItem(@RequestBody @Valid CreateItemRequest createItemRequest, Authentication authentication) {
         String authName = authentication.getName();
-        ItemResponse itemResponse = itemFacade.create(createItemRequest, authName);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(itemResponse);
+        itemFacade.create(createItemRequest, authName);
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping
