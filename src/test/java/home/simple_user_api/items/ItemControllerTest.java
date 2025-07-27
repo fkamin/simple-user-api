@@ -133,7 +133,7 @@ public class ItemControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
         ).andExpect(status().isOk()).andReturn();
 
-        // them
+        // then
         String jsonResponse = mvcResult.getResponse().getContentAsString();
         List<ItemResponse> userItems = objectMapper.readValue(jsonResponse, new TypeReference<>() {
         });
@@ -156,7 +156,7 @@ public class ItemControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
         ).andExpect(status().isOk()).andReturn();
 
-        // them
+        // then
         String jsonResponse = mvcResult.getResponse().getContentAsString();
         List<ItemResponse> userItems = objectMapper.readValue(jsonResponse, new TypeReference<>() {
         });
@@ -170,7 +170,7 @@ public class ItemControllerTest {
         thereIsUserWithoutItems();
         CreateItemRequest createItemRequest = thereIsInvalidCreateItemRequest();
 
-        // when
+        // when then
         mockMvc.perform(
                 post("/items")
                         .with(SecurityMockMvcRequestPostProcessors.anonymous())
@@ -184,7 +184,7 @@ public class ItemControllerTest {
         // given
         thereIsUserWithItems();
 
-        // when
+        // when then
         mockMvc.perform(
                 get("/items")
                         .with(SecurityMockMvcRequestPostProcessors.anonymous())

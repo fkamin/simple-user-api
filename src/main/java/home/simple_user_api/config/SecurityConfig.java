@@ -26,7 +26,7 @@ import javax.crypto.spec.SecretKeySpec;
 
 @Configuration
 @EnableWebSecurity
-@EnableMethodSecurity()
+@EnableMethodSecurity
 public class SecurityConfig {
     private final UserRepository userRepository;
 
@@ -83,7 +83,6 @@ public class SecurityConfig {
         SecretKeySpec secretKey = new SecretKeySpec(jwtKey.getBytes(), "HmacSHA256");
         return NimbusJwtDecoder.withSecretKey(secretKey).build();
     }
-
 
     @Bean
     public PasswordEncoder passwordEncoder() {

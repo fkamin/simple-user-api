@@ -81,5 +81,4 @@ public class CustomUserDetailsServiceTest {
         String encodedPassword = passwordEncoder.encode("test-password");
         userRepository.save(new User("test-user", encodedPassword));
     }
-
 }
