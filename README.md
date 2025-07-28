@@ -3,8 +3,8 @@
 ## Table of Contents
 1. [About project](#about-project)
 2. [Tech stack](#tech-stack)
-3. [How to start](#how-to-start)
-4. [How to stop](#how-to-stop)
+3. [How to start](#how-to-run-application)
+4. [How to stop](#how-to-stop-application)
 
 ## About project
 
