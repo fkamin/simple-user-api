@@ -6,10 +6,29 @@ services:
     environment:
       - MYSQL_DATABASE=simple-user-api-db
       - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_PASSWORD=password
     networks:
       - app-network
+    restart: always
     ports:
-      - "3306:3306"
+      - "3307:3306"
+
+  application:
+    image: spring-app
+    container_name: application
+    environment:
+      - MYSQL_HOST=mysql-database
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=1234
+      - MYSQL_PORT=3306
+    networks:
+      - app-network
+    depends_on:
+      - mysql-database
+    restart: always
+    ports:
+      - "8080:8080"
+    build: .
 
 networks:
   app-network:
