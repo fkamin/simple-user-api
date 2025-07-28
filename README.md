@@ -50,7 +50,7 @@ http://localhost:8080/swagger-ui/index.html
 
 ## How to stop application
 
-In order to stop containers, you just need to run this command:
+In order to stop container, you just need to run this command:
 #### Stop docker container
 ```bash
 docker compose down
