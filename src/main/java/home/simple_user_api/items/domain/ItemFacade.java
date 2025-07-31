@@ -18,17 +18,17 @@ public class ItemFacade {
     }
 
     public void create(CreateItemRequest createItemRequest, String authUsername) {
-        User user = getLoggedInUser(authUsername);
+        User authenticatedUser = getLoggedInUser(authUsername);
 
-        Item itemToSave = new Item(createItemRequest.name(), user);
+        Item itemToSave = new Item(createItemRequest.name(), authenticatedUser);
 
         itemRepository.save(itemToSave);
     }
 
     public List<ItemResponse> getItems(String authUsername) {
-        User user = getLoggedInUser(authUsername);
+        User authenticatedUser = getLoggedInUser(authUsername);
 
-        return itemRepository.findAllByOwner(user).stream().map(Item::toItemResponse).toList();
+        return itemRepository.findAllByOwner(authenticatedUser).stream().map(Item::toItemResponse).toList();
     }
 
     private User getLoggedInUser(String login) {

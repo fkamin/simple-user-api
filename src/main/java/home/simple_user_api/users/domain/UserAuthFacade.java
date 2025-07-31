@@ -28,7 +28,9 @@ public class UserAuthFacade {
     }
 
     public void register(RegistrationRequest registrationRequest) {
-        if (userRepository.existsByLogin((registrationRequest.login()))) throw new UserAlreadyExistsException();
+        if (userRepository.existsByLogin((registrationRequest.login()))) {
+            throw new UserAlreadyExistsException();
+        }
 
         User userToSave = new User(
                 registrationRequest.login(),
@@ -41,8 +43,9 @@ public class UserAuthFacade {
     public JwtResponse authenticate(AuthenticationRequest authenticationRequest) {
         UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.login());
 
-        if (!passwordEncoder.matches(authenticationRequest.password(), userDetails.getPassword()))
+        if (!passwordEncoder.matches(authenticationRequest.password(), userDetails.getPassword())) {
             throw new InvalidLoginOrPasswordException();
+        }
 
         String token = jwtService.generateJwtToken(userDetails).getTokenValue();
         return new JwtResponse(token);

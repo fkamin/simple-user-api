@@ -1,6 +1,7 @@
 package home.simple_user_api.users;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import home.simple_user_api.IntegrationAndUnitTest;
 import home.simple_user_api.MySQLTestContainer;
 import home.simple_user_api.items.domain.ItemRepository;
 import home.simple_user_api.users.domain.User;
@@ -10,26 +11,18 @@ import home.simple_user_api.users.dtos.requests.RegistrationRequest;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-import org.testcontainers.containers.MySQLContainer;
-import org.testcontainers.junit.jupiter.Testcontainers;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@Testcontainers
-@AutoConfigureMockMvc
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@IntegrationAndUnitTest
 public class UserAuthControllerTest {
     @Autowired
     private UserRepository userRepository;
@@ -48,11 +41,7 @@ public class UserAuthControllerTest {
 
     @DynamicPropertySource
     static void overrideProperties(DynamicPropertyRegistry registry) {
-        MySQLContainer<?> mySQLContainer = MySQLTestContainer.getInstance();
-        registry.add("spring.datasource.url", mySQLContainer::getJdbcUrl);
-        registry.add("spring.datasource.username", mySQLContainer::getUsername);
-        registry.add("spring.datasource.password", mySQLContainer::getPassword);
-        registry.add("spring.datasource.driver-class-name", mySQLContainer::getDriverClassName);
+        MySQLTestContainer.configureProperties(registry);
     }
 
     @BeforeEach

@@ -1,5 +1,6 @@
 package home.simple_user_api;
 
+import org.springframework.test.context.DynamicPropertyRegistry;
 import org.testcontainers.containers.MySQLContainer;
 import org.testcontainers.utility.DockerImageName;
 
@@ -19,4 +20,13 @@ public class MySQLTestContainer {
     public static MySQLContainer<?> getInstance() {
         return mysqlContainer;
     }
+
+    public static void configureProperties(DynamicPropertyRegistry registry) {
+        MySQLContainer<?> container = getInstance();
+        registry.add("spring.datasource.url", container::getJdbcUrl);
+        registry.add("spring.datasource.username", container::getUsername);
+        registry.add("spring.datasource.password", container::getPassword);
+        registry.add("spring.datasource.driver-class-name", container::getDriverClassName);
+    }
 }
+
